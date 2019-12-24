@@ -4,6 +4,9 @@
 var bcrypt = require('bcrypt-nodejs');//la usaremos para encriptar la contrasenya.
 var User = require('../models/user');//cargamos la clase User.
 var jwt = require('../services/jwt');//importamos la clase para generar el token del usuario.
+var mongoosePaginate = require('mongoose-pagination');//paquete que nos permite paginar.
+var fs = require('fs'); // nos permite trabajar con archivos.(librerias)
+var path = require('path') //nos permite trabajar con las rutas del sistema de ficheros.(librerias)
 
 function home(req,res){
     res.status(200).send({
@@ -110,9 +113,165 @@ function loginUser(req,res){
     });
 }
 
+//metodo para obtener información de un usuario.
+
+function getUser(req,res){
+    //se usa params para get y body post o put.
+
+    //la id llega por la url.
+    var userId = req.params.id;
+
+    User.findById(userId,(err,user)=>{
+        
+        if(err) return res.status(500).send({message: 'Error en la petición.'});
+
+        if(!user) return res.status(404).send({message: 'El usuario no existe.'});
+
+        return res.status(200).send({user});
+
+    });
+}
+
+//Metodo que devuelve una lista de usuarios paginado.
+function getUsers(req,res){
+
+    //obtenemos el id del usuario logueado.
+    var identity_user = req.user.sub;
+    var page = 1;
+
+    //número de paginas.
+    if(req.params.page){
+        
+        page = req.params.page;
+
+    }
+
+    var itemsPerPage = 5;
+
+    //hago una busqueda de todos los usuarios que existen en la base de datos.
+    User.find().sort('_id').paginate(page,itemsPerPage,(err,users,total)=>{
+        if(err) return res.status(500).send({message: 'Error en la petición.'});
+
+        if(!users) return res.status(404).send({message: 'No hay usuarios disponible.'});
+        
+        //devuelvo todos los usuarios, el numero de usuarios que hay en la bases de datos y las paginas que hay.
+        return res.status(200).send({
+            users,
+            total,
+            pages: Math.ceil(total/itemsPerPage)
+        });
+    });
+}
+
+//metodo nos permite modificar los campos
+
+function updateUser(req,res){
+
+    var userId = req.params.id;
+    var update = req.body;
+
+    console.log(userId);
+    //borrar la contraseña 
+    delete update.password;
+
+    //comprobamos que el usuario modifique sus datos 
+    if(userId != req.user.sub){
+        return res.status(500).send({ message: 'No tiene permisos suficiente para modificar los datos.'});
+    }
+
+    //mongoose me devuelve el objeto user original, por lo cual le tengo que pasar un tercer parametro.(new:true)
+    //para que me vuelva el objeto userUpdated actualizado.
+    User.findByIdAndUpdate(userId,update,{new:true},(err,userUpdated)=>{
+        
+        if(err) return res.status(500).send({ message: 'Error en la petición.'});
+
+        if(!userUpdated) return res.status(404).send({message: 'No se ha podido actualizar el usuario.'});
+
+        return res.status(200).send({user: userUpdated});
+    });
+
+}
+
+//metodo que permitara al usuario cambiar su foto de perfil.
+
+function uploadImage(req,res){
+    
+    var userId = req.params.id;
+
+
+        //solo si estamos subiendo un archivo.
+        if(req.files){
+            
+            var file_path = req.files.image.path;
+            var file_split = file_path.split('/'); //nombre del archivo.
+            
+            //nombre de archivo
+            var file_name = file_split[2];
+
+            //nombre de la extensión.
+            var ext_split = file_name.split('\.');
+            var file_ext = ext_split[1];
+
+            //comprobamos que el usuario puede modificar su foto de perfil.
+            if(userId != req.user.sub){
+
+                return removeFilesOfUplaod(res,file_path,'No tiene permisos suficiente para modificar la foto de perfil.');
+            
+            }
+
+            //comprobamos que la extensión sea correcta.
+            if(file_ext == 'jpg' || file_ext == 'png' || file_ext == 'jpeg' || file_ext == 'gif'){
+
+                User.findByIdAndUpdate(userId,{image:file_name},{new:true},(err,userUpdated)=>{
+                            
+                if(err) return res.status(500).send({ message: 'Error en la petición.'});
+
+                if(!userUpdated) return res.status(404).send({message: 'No se ha podido actualizar el usuario.'});
+
+                return res.status(200).send({user: userUpdated});
+
+                });
+            }else{
+                return removeFilesOfUplaod(res,file_path,'Extensión no válida.');
+            }
+        }else{
+            return res.status(200).send({ message: 'No se ha subido la imagen.'});
+        }
+
+}
+
+//cada vez que se sube una imagen el midleware sube la imagen, por lo cual salta cauando salta el error hay que borralo.
+function removeFilesOfUplaod(res,file_path,message){
+
+    fs.unlink(file_path,(err) =>{
+        return res.status(200).send({message: message});
+    })
+}
+
+//metodo que obtiene la imagen del usuario.
+function getImageFile(req,res){
+
+    var image = req.params.imageFile;
+    var path_file = './uploads/users/'+image;
+
+    //comprueba si la imagen existe en la bases de datos, y si no existe muestra el erro.
+    fs.exists(path_file,(exists)=>{
+        if(exists){
+             res.sendFile(path.resolve(path_file));//devuelve la imagen.
+        }else{
+             res.status(200).send({message: 'No existe la imagen.'});
+        }
+    });
+}
+//nor permite llamar los metodos desde fuera.
 module.exports = {
     home,
     pruebas,
     saveUser,
-    loginUser
+    loginUser,
+    getUser,
+    getUsers,
+    updateUser,
+    uploadImage,
+    getImageFile
 }
