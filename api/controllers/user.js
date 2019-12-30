@@ -3,10 +3,12 @@
 
 var bcrypt = require('bcrypt-nodejs');//la usaremos para encriptar la contrasenya.
 var User = require('../models/user');//cargamos la clase User.
+var Follow = require('../models/follow');//cargamos la clase User.
 var jwt = require('../services/jwt');//importamos la clase para generar el token del usuario.
 var mongoosePaginate = require('mongoose-pagination');//paquete que nos permite paginar.
 var fs = require('fs'); // nos permite trabajar con archivos.(librerias)
 var path = require('path') //nos permite trabajar con las rutas del sistema de ficheros.(librerias)
+var Publication = require('../models/publication');//importamos el modelo publication.
 
 function home(req,res){
     res.status(200).send({
@@ -127,9 +129,41 @@ function getUser(req,res){
 
         if(!user) return res.status(404).send({message: 'El usuario no existe.'});
 
-        return res.status(200).send({user});
+        //aquí vamos  a comprobar si el usuario nos sigue, y si también lo seguimos nosotros.
+        followThisUser(req.user.sub,userId).then((value)=>{
 
-    });
+            return res.status(200).send({
+                user,
+                following:value.following,
+                followed:value.followed
+            });
+        });
+
+        });
+
+}
+//se el asicrono para que las llamadas a la bases de datos se ejecutan de manera asicrona. 
+
+async function followThisUser(identity_user_id, user_id) {
+    var following = await Follow.findOne({ user: identity_user_id, followed: user_id }).exec()
+        .then((following) => {
+            return following;
+        })
+        .catch((err) => {
+            return handleError(err);
+        });
+    var followed = await Follow.findOne({ user: user_id, followed: identity_user_id }).exec()
+        .then((followed) => {
+            return followed;
+        })
+        .catch((err) => {
+            return handleError(err);
+        });
+ 
+    return {
+        following: following,
+        followed: followed
+    };
 }
 
 //Metodo que devuelve una lista de usuarios paginado.
@@ -153,14 +187,53 @@ function getUsers(req,res){
         if(err) return res.status(500).send({message: 'Error en la petición.'});
 
         if(!users) return res.status(404).send({message: 'No hay usuarios disponible.'});
-        
-        //devuelvo todos los usuarios, el numero de usuarios que hay en la bases de datos y las paginas que hay.
-        return res.status(200).send({
-            users,
-            total,
-            pages: Math.ceil(total/itemsPerPage)
+
+        followeUserIds(identity_user).then((value)=>{
+            return res.status(200).send({
+                users,
+                users_following: value.following,
+                users_follow_me: value.followed,
+                total,
+                pages: Math.ceil(total/itemsPerPage)
+            });
         });
+
+        //devuelvo todos los usuarios, el numero de usuarios que hay en la bases de datos y las paginas que hay.
     });
+}
+//metodo que nos saca listado de ID de usuarios que nos sigue y seguimos.
+async function followeUserIds(user_id){
+
+    var following = await Follow.find({"user":user_id}).select({'_id':0,'__v':0,'user':0}).exec()
+
+        .then((follows)=>{
+            var follow_clean = [];
+            follows.forEach((follow)=>{
+                follow_clean.push(follow.followed);
+            });
+            return follow_clean;     
+        })
+        .catch((err) => {
+            return handleError(err);
+        });
+    
+    var followed = await Follow.find({"follow":user_id}).select({'_id':0,'__v':0,'followed':0}).exec()
+
+    .then((follows)=>{
+        var follow_clean = [];
+        follows.forEach((follow)=>{
+            follow_clean.push(follow.user);
+        });
+        return follow_clean;     
+    })
+    .catch((err) => {
+        return handleError(err);
+    });
+
+    return {
+        following:following,
+        followed:followed
+    }
 }
 
 //metodo nos permite modificar los campos
@@ -263,6 +336,65 @@ function getImageFile(req,res){
         }
     });
 }
+
+//metodo para obtener los seguidores y a los que sigue un usuario.
+function getCounters(req,res){
+
+    var userId = req.user.sub;
+    console.log(userId);
+    if(req.params.id){
+        userId = req.params.id;
+    }
+
+    getCountFollow(userId)
+    .then((value)=>{
+        return res.status(200).send(value);
+    })
+
+    .catch((err) => {
+        return handleError(err);
+    });
+
+}
+
+//metodo para contar los seguidores y a los que sigue.
+async function getCountFollow(user_id){
+
+    var following = await Follow.countDocuments({"user":user_id}).exec()
+
+    .then((count)=>{
+        return count;
+    })
+
+    .catch((err) => {
+        return handleError(err);
+    });
+
+    var followed = await Follow.countDocuments({"followed":user_id}).exec()
+
+    .then((count)=>{
+        return count;
+    })
+
+    .catch((err)=>{
+        return handleError(err);
+    });
+
+    var publication = await Publication.countDocuments({'user':user_id}).exec()
+
+    .then((count)=>{
+        return count;
+    })
+    .catch((err)=>{
+        return handleError(err);
+    });
+
+    return{
+        following:following,
+        followed:followed,
+        publication:publication
+    }
+}
 //nor permite llamar los metodos desde fuera.
 module.exports = {
     home,
@@ -273,5 +405,6 @@ module.exports = {
     getUsers,
     updateUser,
     uploadImage,
-    getImageFile
+    getImageFile,
+    getCounters
 }

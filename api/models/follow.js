@@ -6,8 +6,8 @@ var Schema = mongoose.Schema;
 
 //Definimos el modelo del publicaion.
 var FollowSchema = Schema({
-    user: { type: Schema.ObjectId, ref:'user'},
-    followed: { type: Schema.ObjectId, ref:'user'}
+    user: { type: mongoose.Schema.Types.ObjectId, ref:'User'},
+    followed: {  type: mongoose.Schema.Types.ObjectId, ref:'User'}
 });
 
 //para poder usar el modelo follow hay que exportalo.

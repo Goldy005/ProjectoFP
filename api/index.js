@@ -9,7 +9,11 @@ var app = require('./app');//cargamos todos los paquetes y librerias.
 var port = 3800;
 /*Para conectarse a mongoDB se tiene que utilizar las promesas. */
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/red_social',{useMongoClient: true})
+mongoose.connect('mongodb://localhost:27017/red_social',{
+    useNewUrlParser: true,
+    useUnifiedTopology : true,
+    useFindAndModify : false
+  })
 
 //useMongoClient a true  se conecta a mongoDB como cliente.
 

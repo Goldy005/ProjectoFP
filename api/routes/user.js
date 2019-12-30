@@ -22,5 +22,6 @@ api.get('/users/:page?',md_auth.ensureAuth,UserController.getUsers);
 api.put('/update-user/:id',md_auth.ensureAuth,UserController.updateUser); //se usa el put para modificar los datos.
 api.post('/upload-image-user/:id',[md_auth.ensureAuth,md_upload],UserController.uploadImage);
 api.get('/get-image-user/:imageFile',UserController.getImageFile);
+api.get('/counters/:id?',md_auth.ensureAuth,UserController.getCounters);
 //Para poder exportar los metodos.
 module.exports = api;
