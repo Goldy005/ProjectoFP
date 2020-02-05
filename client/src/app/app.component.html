@@ -1,0 +1,46 @@
+  <nav class="navbar navbar-expand-sm fixed-top">
+
+      
+      <div class="navbar-header">
+        <a href="#" class="navbar-brand">{{title}}</a>
+      </div>
+      <!--Solo mostrara el botón cuando, el tamaño de la pantalla sea pequeña.-->
+      <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse" type="button">
+        <span class="navbar-toggler-icon"></span><!--Boton hamburguesa.-->
+      </button>
+      <!--Cuando exista el identity lo muestra.-->
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav ml-auto" *ngIf="identity">                      
+          <li  class="nav-item" >
+            <a class="nav-link" href="#">
+              Inicio
+            </a>
+          </li>
+          <li class="nav-item" >
+            <a class="nav-link" href="#">
+              Timeline
+            </a>
+          </li>
+          <li  class="nav-item">
+            <a class="nav-link" href="#">
+              Users
+            </a>
+          </li>
+        </ul>
+        <!--Y cuando no exista, muestra lo siguiente.-->
+        <ul class="navbar-nav ml-auto" *ngIf="!identity">
+          <li class="nav-item">
+            <a  class="nav-link" [routerLink]="['/login']" [routerLinkActive]="['active']">
+              Login
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/register']" [routerLinkActive]="['active']">
+              Registro
+            </a>
+          </li>
+        </ul>
+      </div>
+  </nav>
+<!--Se cargara el component asociado a la ruta, con el router outler.-->
+<router-outlet></router-outlet>

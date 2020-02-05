@@ -24,6 +24,16 @@ var message_routes = require('./routes/message');
 app.use(bodyParser.urlencoded({extended:false})); //configuracion necesaria para el funcionamiento del bodyParser.
 app.use(bodyParser.json());// cuando recibe informacion en formato JSON, automaticamente lo convertira un objeto.
 
+//cors(configuracion de las cabeceras para hacer peticiones AJAX desde un fronted con Angular)
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+    res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+ 
+    next();
+});
+
 //rutas
 app.use('/api',user_routes);
 app.use('/api',follow_routes);
