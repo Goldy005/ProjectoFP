@@ -1,0 +1,103 @@
+import { Component, OnInit,OnDestroy } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { User } from '../../models/user';
+import { UserService } from '../../services/user.service';
+import { UploadService } from '../../services/upload.service';
+import { GLOBAL } from '../../services/global';
+
+
+@Component({
+    selector:'user-edit',
+    templateUrl: './user-edit.component.html',
+    providers: [UserService, UploadService]
+})
+
+export class UserEditComponent implements OnInit{
+
+    public title: string;
+    public user: User;
+    public identity;
+    public token;
+    public status:string;
+    public filesToUpload: Array<File>;
+    public url:String;
+
+    // Search the tags in the DOM
+    bodyTag: HTMLBodyElement = document.getElementsByTagName('body')[0];
+    htmlTag: HTMLElement = document.getElementsByTagName('html')[0];
+
+    constructor(
+        private _route: ActivatedRoute,
+        private _router: Router,
+        private _userService: UserService,
+        private _uploadService: UploadService,
+    ){
+        this.title = 'Actualizar mis datos';
+        this.user = this._userService.getIdentity();
+        this.identity = this.user;
+        this.token = this._userService.getToken();
+        this.url = GLOBAL.url;
+    }
+
+    ngOnInit(): void {
+
+
+       // Getting an instance of the widget.
+        //const widget = uploadcare.Widget('[role=uploadcare-uploader]');
+        // Selecting an image to be replaced with the uploaded one.
+        //const preview = document.getElementById('preview');
+        // "onUploadComplete" lets you get file info once it has been uploaded.
+        // "cdnUrl" holds a URL of the uploaded file: to replace a preview with.
+        
+        /*widget.onUploadComplete(fileInfo => {
+        preview.src = fileInfo.cdnUrl;
+        });*/
+
+        console.log('user-edit.component se ha cargado!.');
+        this.bodyTag.classList.add('home-page');
+        this.htmlTag.classList.add('home-page');
+    }
+
+    onSubmit(){
+
+        this._userService.updateUser(this.user).subscribe(
+            response => {
+                if(!response.user){
+                    this.status = 'error';
+                }else{
+                    this.status = 'success';
+                    localStorage.setItem('identity',JSON.stringify(this.user));
+                    this.identity = this.user;
+
+                    //Subida de imagen de usuario
+                    this._uploadService.makeFileRequest(this.url+'upload-image-user/'+this.user._id,[],this.filesToUpload,this.token,'image')
+                                        .then((result:any)=>{
+                                            this.user.image = result.user.image;
+                                            localStorage.setItem('identity',JSON.stringify(this.user));
+                                        });
+                }
+            },
+            error =>{
+                let errorMensaje = <any>error;
+                console.log(errorMensaje);
+                if(errorMensaje != null){
+                    this.status = 'error';
+                }
+            }
+        );
+    }
+
+    fileChangeEvent(fileInput:any){
+
+        this.filesToUpload = <Array<File>>fileInput.target.files;
+    }
+
+    ngOnDestroy() {
+
+        // remove the the body classes
+        this.bodyTag.classList.remove('home-page');
+        this.htmlTag.classList.remove('home-page');
+
+  }
+
+}

@@ -47,13 +47,14 @@ export class LoginComponent implements OnInit{
                     this.status = 'error';
                 }else{
                     
-                    this.status = 'success';
                     console.log(this.identity);
 
                     //Guardamos la información del usuario, en el local storage.(solo guarda en fomato String)
                     localStorage.setItem('identity',JSON.stringify(this.identity));
                     //conseguimos el token
                     this.getToken();
+
+                    this._router.navigate(['/']);
                 }
             },
 
@@ -84,11 +85,10 @@ export class LoginComponent implements OnInit{
                     this.status = 'error';
                 }else{
                     
-                    this.status = 'success';
-                    console.log(this.token);
                     //Guardamos el token
                     localStorage.setItem('token',this.token);
                     //conseguir las estadisticas del usuario
+                    this.getCounters();
                 }
             },
 
@@ -102,6 +102,20 @@ export class LoginComponent implements OnInit{
                     this.status = 'error';
 
                 }
+            }
+        );
+    }
+
+    getCounters(){
+        this._userService.getCounters().subscribe(
+            
+            response => {
+                localStorage.setItem('stats',JSON.stringify(response));
+                this.status = 'success';
+                this._router.navigate(['/home']);
+            },
+            error =>{
+                console.log(<any>error);
             }
         );
     }

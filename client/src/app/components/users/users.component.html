@@ -1,0 +1,19 @@
+<h1>{{title}}</h1>
+<div class="people">
+    <div *ngFor="let user of users" class="item-user">
+        <div class="panel panel-default">
+            <div class="panel-bodu">
+                <div class="user_name pull_left">
+                    <a href="#">
+                        {{ user.name +' '+user.surname }}
+                    </a>
+                </div>
+                <!--Botones de seguir y de dejar de seguir. -->
+            </div>
+        </div>
+    </div>
+    <ul class="pagination pull-right">
+        <li *ngIf="page > 1"><a [routerLink]="['/users',prev_page]">Anterior</a></li>
+        <li *ngIf="pages != page"><a [routerLink]="['/users',next_page]">Anterior</a></li>
+    </ul>
+</div>

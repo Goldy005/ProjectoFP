@@ -19,11 +19,13 @@
     "@angular/platform-browser": "~8.2.14",
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
-    "bootstrap": "^3.4.1",
+    "bootstrap": "^4.4.1",
     "jquery": "^3.4.1",
+    "ngx-uploadcare-widget": "^2.0.2",
     "rxjs": "~6.4.0",
     "rxjs-compat": "^6.5.4",
     "tslib": "^1.10.0",
+    "uploadcare-widget": "^3.9.1",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
@@ -37,7 +39,7 @@
     "codelyzer": "^5.0.0",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
-    "karma": "~4.1.0",
+    "karma": "^5.0.2",
     "karma-chrome-launcher": "~2.2.0",
     "karma-coverage-istanbul-reporter": "~2.0.1",
     "karma-jasmine": "~2.0.1",

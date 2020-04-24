@@ -1,46 +1,56 @@
-  <nav class="navbar navbar-expand-sm fixed-top">
-
-      
-      <div class="navbar-header">
-        <a href="#" class="navbar-brand">{{title}}</a>
-      </div>
+  <nav class="navbar navbar-expand-lg">
       <!--Solo mostrara el botón cuando, el tamaño de la pantalla sea pequeña.-->
       <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse" type="button">
         <span class="navbar-toggler-icon"></span><!--Boton hamburguesa.-->
       </button>
       <!--Cuando exista el identity lo muestra.-->
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav ml-auto" *ngIf="identity">                      
+      <div class="navbar" id="navbarCollapse">
+        <ul id="botones" class="navbar-nav ml-auto" *ngIf="identity">                      
           <li  class="nav-item" >
-            <a class="nav-link" href="#">
+            <a  class="btn btn-light" href="#"   [routerLink]="['/home']" [routerLinkActive]="['active']">
               Inicio
             </a>
           </li>
           <li class="nav-item" >
-            <a class="nav-link" href="#">
+            <a class="btn btn-light">
               Timeline
             </a>
           </li>
           <li  class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="btn btn-light" href="#" [routerLink]="['/users']" [routerLinkActive]="['active']">
               Users
             </a>
           </li>
         </ul>
         <!--Y cuando no exista, muestra lo siguiente.-->
         <ul class="navbar-nav ml-auto" *ngIf="!identity">
-          <li class="nav-item">
-            <a  class="nav-link" [routerLink]="['/login']" [routerLinkActive]="['active']">
+          <li id="login" class="nav-item">
+            <a  class="btn btn-light" [routerLink]="['/login']" [routerLinkActive]="['active']">
               Login
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/register']" [routerLinkActive]="['active']">
+          <li  class="nav-item">
+            <a class="btn btn-light" [routerLink]="['/register']" [routerLinkActive]="['active']">
               Registro
             </a>
           </li>
-        </ul>
-      </div>
-  </nav>
+         </ul>
+        </div>
+        <ul id="menu-usuario" class="dropdown" *ngIf="identity">
+          <div class="avatar">
+            <img src="{{ url+'get-image-user/'+ identity.image }}" *ngIf="identity && identity.image"/>
+          </div>
+          <div class="menu-usuario-buton">
+            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{identity.name}}
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">Mi perfil </a>
+              <a class="dropdown-item" [routerLink]="['./mis-datos']" >Mis datos</a>
+              <a id="usuario-cerrar-session" class="dropdown-item" (click)="logout()" href="#">Cerrar sessión</a>
+            </div>
+          </div>
+      </ul>
+    </nav>
 <!--Se cargara el component asociado a la ruta, con el router outler.-->
 <router-outlet></router-outlet>

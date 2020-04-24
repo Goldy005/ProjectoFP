@@ -8,13 +8,19 @@ import {HttpClientModule} from '@angular/common/http';// para hacer peticiones H
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { HomeComponent } from './components/home/home.component';
+import { UserEditComponent } from './components/user-edit/user-edit.component';
+import { UsersComponent } from './components/users/users.component';
 
 //Para poder usar los components en cualquier sitio, los anados en delcaration,
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    HomeComponent,
+    UserEditComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
@@ -22,7 +28,7 @@ import { RegisterComponent } from './components/register/register.component';
     routing,
     FormsModule,
     HttpClientModule
-  ],
+    ],
   providers: [appRoutingProviders],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,115 @@
+/*IMAGEN DE FONDO POR LOGIN,REGISTER*/
+body{
+    background-image: url('./img/background.jpg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+/*FONDO DE INICIO*/
+.home-page{
+    height: 100%;
+    background-repeat: no-repeat;
+    background-image: none;
+    background-color: white;
+}
+/*CARACTERISTICAS DEL LOGO*/
+.imagenLogo{
+    position: absolute;
+    top: 25%;
+    left: 43%;
+}
+/*FORMULARIO LOGIN*/
+.formulario{
+
+    position: absolute !important; 
+    top: 50% !important;
+    left: 37% !important;
+}
+/*FORMULARIO REGISTRO*/
+.formularioRegister{
+
+    position: absolute !important; 
+    top: 46% !important;
+    left: 39% !important;
+
+}
+#login{
+    margin-right: 10%;
+}
+/*Margen en los botones login,register...*/
+#botones >li {
+    margin-right: 10%;
+}
+/*Tamaño de los botones login.*/
+#botones a {
+   width: 100px;
+}
+/*TITULO DE BIENVENIDO DEL HOME*/
+#home-title{
+    font-family: 'Ubuntu';
+    font-size: 2em;
+    margin-left: 40%;
+    margin-top: 7%;
+}
+
+/*Cuerpo en la página home.*/
+
+.home-body{
+    
+    margin-left: 38%;
+    margin-top: 13%;
+}
+
+/*Anchura de los botones*/
+/*Separación de los botones.*/
+.home-body  > a{
+    margin-right: 3%;
+    width: 20%;
+}
+
+/*Alinear los botones a la derecha.*/
+#menu-usuario{
+    position: absolute;
+    left: 88%;
+    display: flex;
+}
+/*Alinear el desplegable*/
+#menu-usuario .dropdown-menu{
+    position: absolute;
+    left: 22%;
+}
+/*Separar el avatar del menu desplegable.*/
+.menu-usuario-buton{
+    margin-left: 10px;
+}
+
+/*Imagen de profile.*/
+#menu-usuario .avatar{
+    margin-top: -3%;
+    width: 40%;
+    height: 22%;
+    border-radius: 100px;
+    overflow: hidden;
+}
+/*Aavatar*/
+#menu-usuario .avatar img{
+    height: 45px;
+}
+/*El fondo de barra de navegación.*/
+.nav-background{
+    background-color: #05e8ba;
+    background-image: linear-gradient(315deg, #05e8ba 0%, #087ee1 74%);    
+}
+/*Color del boton cuando es activo.*/
+/*Color de la letra de los botones*/
+#botones .active{
+    background: rgb(3, 126, 248) !important;
+    color: white !important;
+}
+#botones a:hover{
+    background: rgb(3, 126, 248) !important;
+    color: white !important;
+}
+/*El estilo de la fuente*/
+.user-edit{
+    font-family: 'Ubuntu';
+}
