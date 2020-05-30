@@ -1,4 +1,3 @@
-'use strict' /*Permite utilizar las nuevas funciones de JS*/
 
 /*Index como punto de partida para lanzar el backend, realiza la conexión a mongodb y 
 también se realiza la conexión a un servidor nodejs*/

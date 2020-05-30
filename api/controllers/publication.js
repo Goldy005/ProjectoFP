@@ -66,9 +66,12 @@ function getPublications(req, res) {
         followClean.push(follow.followed);
       });
 
+      //Añadimos el usuario identificado para obtener sus publicaciones.
+      followClean.push(req.user.sub);
+
       // busca todas las publicaciones de los usuarios que sigo.
       Publication.find({ user: { $in: followClean } })
-        .sort('created_at')
+        .sort({created_at: 'desc'})
         .populate('user')
         .paginate(page, itemsPerPage, (err, publications, total) => {
           if (err)
@@ -82,6 +85,7 @@ function getPublications(req, res) {
             total_items: total,
             pages: Math.ceil(total, itemsPerPage),
             page,
+            items_per_page:itemsPerPage,
             publications
           });
         });
@@ -90,6 +94,46 @@ function getPublications(req, res) {
     .catch(err => {
       return handleError(err);
     });
+}
+
+// metodo para devolver lista de publicaciones, de un usuario determinado.
+function getPublicationsUser(req, res) {
+  let page = 1;
+
+  if (req.params.page) {
+    page = req.params.page;
+  }
+
+  let userId = req.user.sub;
+
+  if(req.params.user){
+    userId = req.params.user;
+  }
+
+
+  const itemsPerPage = 4;
+
+  // busca todas las publicaciones de los usuarios que sigo.
+  Publication.find({ user: userId })
+    .sort({created_at: 'desc'})
+    .populate('user')
+    .paginate(page, itemsPerPage, (err, publications, total) => {
+      if (err)
+        return res
+          .status(500)
+          .send({ message: 'Error al devolver las publcicaiones.' });
+      if (!publications)
+        return res.status(404).send({ message: 'No hay publicaciones.' });
+
+      return res.status(200).send({
+        total_items: total,
+        pages: Math.ceil(total, itemsPerPage),
+        page,
+        items_per_page:itemsPerPage,
+        publications
+      });
+    });
+      
 }
 
 // Metodo para obtener una publicacion.
@@ -225,5 +269,6 @@ module.exports = {
   getPublication,
   deletePublication,
   uploadImage,
-  getImageFile
+  getImageFile,
+  getPublicationsUser
 };

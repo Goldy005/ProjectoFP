@@ -1,0 +1,23 @@
+<div *ngIf="messages != null" class="people">
+    <div   *ngFor="let message of messages" class="item-user">
+        <div class="users card">
+            <div class="card-body">
+                <div class="users-image">
+                    <img class="rounded-circle z-depth-2" *ngIf="message.emitter.image" src="{{ url+'get-image-user/'+ message.emitter.image }}"/>
+                    <img class="rounded-circle z-depth-2" *ngIf="!message.emitter.image" src="../../../assets/img/profile.png"/>
+                </div>
+                <div class="users-body">
+                    <h5 class="card-title"><a [routerLink]="['/profile/'+message.emitter._id]">{{ message.emitter.name+' '+message.emitter.surname }}</a></h5>
+                    <p class="card-text">{{message.text}}</p>
+                    <div class="date">
+                        {{ (message.created_at | amFromUnix ) | amLocale: 'es' | amTimeAgo }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <ul class="pagination" *ngIf="messages.length > 0">
+            <li class="page-item" *ngIf="page > 1"><a class="page-link" [routerLink]="['/messages/received',prev_page]">Anterior</a></li>
+            <li class="page-item" *ngIf="pages != page"><a class="page-link" [routerLink]="['/messages/received',next_page]">Siguiente</a></li>
+        </ul>
+</div>

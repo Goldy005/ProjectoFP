@@ -42,7 +42,6 @@ exports.ensureAuth = (req, res, next)=> {
   // con esto tengo todos los datos en el controlador del
   req.user = payload;
 
-
   // saltamos a la siguiente acción del controlador.
   next();
 };

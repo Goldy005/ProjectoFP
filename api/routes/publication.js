@@ -1,5 +1,3 @@
-/* Permite utilizar las nuevas funciones de JS */
-
 // Usar el framework express para el sistema de enrutamiento.
 const express = require('express');
 const multipart = require('connect-multiparty');
@@ -22,6 +20,11 @@ api.get(
   '/publications/:page?',
   mdAuth.ensureAuth,
   PublicationController.getPublications
+);
+api.get(
+  '/publications-user/:user/:page?',
+  mdAuth.ensureAuth,
+  PublicationController.getPublicationsUser
 );
 api.get(
   '/publication/:id',

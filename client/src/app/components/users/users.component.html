@@ -1,19 +1,41 @@
-<h1>{{title}}</h1>
 <div class="people">
     <div *ngFor="let user of users" class="item-user">
-        <div class="panel panel-default">
-            <div class="panel-bodu">
-                <div class="user_name pull_left">
-                    <a href="#">
-                        {{ user.name +' '+user.surname }}
-                    </a>
+        <div class="users card" *ngIf="user._id != identity._id">
+            <div class="card-body">
+                <div class="users-image">
+                    <img class="rounded-circle z-depth-2" *ngIf="user.image" src="{{ url+'get-image-user/'+ user.image }}"/>
+                    <img class="rounded-circle z-depth-2" *ngIf="!user.image" src="../../../assets/img/profile.png"/>
                 </div>
-                <!--Botones de seguir y de dejar de seguir. -->
+                <div class="users-body">
+                    <h5 class="card-title"><a [routerLink]="['/profile/'+user._id]">{{ user.name+' '+user.surname }}</a></h5>
+                    <p class="card-text">{{user.nick}}</p>
+                </div>
+                <div class="users-boton">
+                    <button *ngIf="follows.indexOf(user._id) < 0" (click)="followUser(user._id)" class="btn btn-success">Seguir</button>
+                    <button *ngIf="follows.indexOf(user._id) >= 0" 
+                        (mouseenter)="mouseEnter(user._id)"
+                        (mouseleave)="mouseLeave(user._id)"
+                        (click)="unfollowUser(user._id)"
+                        class="btn btn-primary"
+                        [class.btn-danger]="user._id == followUserOver"
+                        >
+                        <span *ngIf="user._id == followUserOver; else following">
+                            Dejar de Seguir
+                        </span>
+                        <ng-template #following>
+                            <span>
+                                Siguiendo
+                            </span>
+                        </ng-template>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-    <ul class="pagination pull-right">
-        <li *ngIf="page > 1"><a [routerLink]="['/users',prev_page]">Anterior</a></li>
-        <li *ngIf="pages != page"><a [routerLink]="['/users',next_page]">Anterior</a></li>
+    
+    <ul class="pagination">
+        <li class="page-item" *ngIf="page > 1"><a class="page-link" [routerLink]="['/users',prev_page]">Anterior</a></li>
+        <li class="page-item" *ngIf="pages != page"><a class="page-link" [routerLink]="['/users',next_page]">Siguiente</a></li>
     </ul>
 </div>
+<sidebar  (sended)="refresh($event)" [stats]="stats"></sidebar>

@@ -7,7 +7,7 @@ const api = express.Router();
 const mdAuth = require('../middlewares/authenticated');
 
 api.get('/probando-ms', mdAuth.ensureAuth, MessageController.probando);
-api.get('/message', mdAuth.ensureAuth, MessageController.saveMessage);
+api.post('/message', mdAuth.ensureAuth, MessageController.saveMessage);
 api.get(
   '/my-messages/:page?',
   mdAuth.ensureAuth,

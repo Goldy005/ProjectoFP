@@ -1,0 +1,47 @@
+<h1 *ngIf="followed != null" class="profile-title">{{title}}{{user.name}}</h1>
+<div *ngIf="followed != null" class="people">
+    <div   *ngFor="let follow of followed" class="item-user">
+        <div class="users card">
+            <div class="card-body">
+                <div class="users-image">
+                    <img class="rounded-circle z-depth-2" *ngIf="follow.user.image" src="{{ url+'get-image-user/'+ follow.user.image }}"/>
+                    <img class="rounded-circle z-depth-2" *ngIf="!follow.user.image" src="../../../assets/img/profile.png"/>
+                </div>
+                <div class="users-body">
+                    <h5 class="card-title"><a [routerLink]="['/profile/'+follow.user._id]">{{ follow.user.name+' '+follow.user.surname }}</a></h5>
+                    <p class="card-text">{{follow.user.nick}}</p>
+                </div>
+                <div class="users-boton">
+                    <button *ngIf="follows.indexOf(follow.user._id) < 0" (click)="followUser(follow.user._id)" class="btn btn-success">Seguir</button>
+                    <button *ngIf="follows.indexOf(follow.user._id) >= 0" 
+                        (mouseenter)="mouseEnter(follow.user._id)"
+                        (mouseleave)="mouseLeave(follow.user._id)"
+                        (click)="unfollowUser(follow.user._id)"
+                        class="btn btn-primary"
+                        [class.btn-danger]="follow.user._id == followUserOver"
+                        >
+                        <span *ngIf="follow.user._id == followUserOver; else following">
+                            Dejar de Seguir
+                        </span>
+                        <ng-template #following>
+                            <span>
+                                Siguiendo
+                            </span>
+                        </ng-template>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <ul class="pagination" *ngIf="followed.length > 0">
+        <li class="page-item" *ngIf="page > 1"><a class="page-link" [routerLink]="['/followed',userPageId,prev_page]">Anterior</a></li>
+        <li class="page-item" *ngIf="pages != page"><a class="page-link" [routerLink]="['/followed',userPageId,next_page]">Siguiente</a></li>
+    </ul>
+</div>
+
+<!--En caso que no siga a ningún usuario, muestro el siguiente mensaje.-->
+<div class="show-message" *ngIf="followed != null && followed.length == 0">
+    <p>{{user.name}} no tiene ningún seguidor.</p>
+</div>
+<sidebar  (sended)="refresh($event)" [stats]="stats"></sidebar>

@@ -64,18 +64,58 @@ function getFollowingUsers(req, res) {
   Follow.find({ user: userId })
     .populate('followed')
     .paginate(page, itemsPage, (err, follows, total) => {
-      if (err)
-        return res.status(500).send({ message: 'Error al dejar de seguir.' });
+        if (err)
+          return res.status(500).send({ message: 'Error al dejar de seguir.' });
 
-      if (!follows)
-        return res.status(404).send({ message: 'No te sigue ningún usuario.' });
-
-      return res.status(200).send({
-        total,
-        pages: Math.ceil(total / itemsPage),
-        follows
-      });
+        if (!follows)
+          return res.status(404).send({ message: 'No te sigue ningún usuario.' });
+            followeUserIds(req.user.sub).then(value => {
+              return res.status(200).send({
+              total,
+              pages: Math.ceil(total / itemsPage),
+              follows,
+              users_following: value.following,
+              users_follow_me: value.followed
+            });
+        });
     });
+}
+// metodo que nos saca listado de ID de usuarios que nos sigue y seguimos.
+async function followeUserIds(userId) {
+  const following = await Follow.find({ user: userId })
+    .select({ _id: 0, __v: 0, user: 0 })
+    .exec()
+
+    .then(follows => {
+      const followClean = [];
+      follows.forEach(follow => {
+        followClean.push(follow.followed);
+      });
+      return followClean;
+    })
+    .catch(err => {
+      return handleError(err);
+    });
+
+  const followed = await Follow.find({ followed: userId })
+    .select({ _id: 0, __v: 0, followed: 0 })
+    .exec()
+
+    .then(follows => {
+      const followClean = [];
+      follows.forEach(follow => {
+        followClean.push(follow.user);
+      });
+      return followClean;
+    })
+    .catch(err => {
+      return handleError(err);
+    });
+
+  return {
+    following,
+    followed
+  };
 }
 
 // metodo que nos saca los usuarios que nos siguien
@@ -104,16 +144,19 @@ function getFollowedUser(req, res) {
       if (err)
         return res.status(500).send({ message: 'Error al dejar de seguir.' });
 
-      if (!follows)
-        return res
-          .status(404)
-          .send({ message: 'No te sigue  ningún usuario.' });
-
-      return res.status(200).send({
-        total,
-        pages: Math.ceil(total / itemsPage),
-        follows
-      });
+        if (!follows)
+          return res.status(404).send({ message: 'No te sigue ningún usuario.' });
+          
+          followeUserIds(req.user.sub).then(value => {
+          
+          return res.status(200).send({
+                total,
+                pages: Math.ceil(total / itemsPage),
+                follows,
+                users_following: value.following,
+                users_follow_me: value.followed
+            });
+        });
     });
 }
 

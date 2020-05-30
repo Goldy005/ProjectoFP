@@ -137,6 +137,7 @@ function getUser(req, res) {
 
     // aquí vamos  a comprobar si el usuario nos sigue, y si también lo seguimos nosotros.
     followThisUser(req.user.sub, userId).then(value => {
+      user.password = null;
       return res.status(200).send({
         user,
         following: value.following,
@@ -230,7 +231,7 @@ async function followeUserIds(userId) {
       return handleError(err);
     });
 
-  const followed = await Follow.find({ follow: userId })
+  const followed = await Follow.find({ followed: userId })
     .select({ _id: 0, __v: 0, followed: 0 })
     .exec()
 

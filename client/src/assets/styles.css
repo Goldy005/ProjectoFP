@@ -113,3 +113,181 @@ body{
 .user-edit{
     font-family: 'Ubuntu';
 }
+/*Titulo actualiza los datos*/
+.user-edit h1{
+    color: rgb(3, 126, 248);
+    margin-top: 3%;
+}
+/*Imagen del usuario*/
+.user-image{
+    margin-top: 4%;
+}
+
+/*Alinear edicion de mis datos.*/
+.user-edit{
+    position: absolute;
+    left: 37%;
+}
+/*Alinear el avatar de perfil*/
+.user-edit .user-image{
+    margin-left: 10%;
+}
+/*Alinear el boton de subir avatar.*/
+.custom-file{
+    position: absolute;
+    left: 2%;
+}
+/*Tamaño del boton actualizar.*/
+.user-edit-submit > input{
+    width: 50%;
+}
+/*Imagen de perfil de los usuarios.*/
+.users .card-body{
+    display: flex;
+}
+/*Espacio entre imagen de los usuarios y el body*/
+.users-body{
+    margin-left: 3%;
+}
+/*Características de los usuarios.*/
+.users{
+    margin-top: 3%;
+    margin-left: 2%;
+    width: 60%;
+}
+/*Foto de perfil*/
+#preview{
+    width: 12rem;
+}
+
+/*Foto de los usuarios.*/
+.users-image .rounded-circle{
+    width: 8rem;
+}
+
+.people .pagination{
+    margin-top: 2%;
+    position: absolute;
+    left: 2%;
+}
+/*Separación entre los botones seguir y dejar de seguir.*/
+.users-boton{
+    width: 60%;
+    position: absolute;
+    left: 84%;
+    top: 60%;
+}
+
+/*Características del sidebar.*/
+.users-sidebar{
+    position: absolute !important;
+    top: 13% !important;
+    left: 65% !important;
+    width: 34%;
+}
+.users-sidebar .card-body{
+    display: flex;
+}
+
+/*Alinear la tabla de las estadisticas del sidebar.*/
+.users-stats th,td{
+    padding: 8px;
+}
+.users-stats{
+    border-top: 1px solid rgb(202, 202, 202);
+    margin-left: 10%;
+    width: 100%;
+}
+.users-stats td{
+    text-align: center;
+    color: green;
+    font-weight: bold;
+    border: 1px solid rgb(202, 202, 202);
+}
+
+/*Alinear la parte de publicaciones*/
+/*.publicar{
+    width: 34%;
+    position: absolute;
+    left: 65%;
+    top: -620px;
+}*/
+.publicar{
+    margin-top: 5%;
+    display: block !important;
+}
+.timeline-show-more{
+    left: 30%;
+    position: absolute;
+    margin-top: 2%;
+}
+
+/*Configurar la parte de perfil*/
+.profile-title{
+    margin-left: 2%;
+    margin-top: 1%;
+}
+/*Espacio entre el título de perfil y card con la información.*/
+.profile{
+    margin: -2.5% ;
+    margin-left: 0.2%;
+}
+/*La imagen del pergil*/
+.profile img{
+    width: 260px !important;
+    height: 260px;
+}
+/*Quitar la línea de arriba en las estadisticas.*/
+.profile .users-stats{
+    border-top: none;
+    margin-left: 0%;
+    width: 100%;
+}
+/*El titulo publicaciones en el perfil.*/
+.profile-publication-title{
+    margin-left: 2%;
+}
+/*El icono de la foto.*/
+.icono-foto > img{
+    width: 100%;
+}
+/*El boton de la imagen.*/
+.icono-foto{
+    position: absolute;
+    left: 88%;
+    top: 30%;
+    width: 10%;
+}
+/*El tamaño de la imagen de la publicación.*/
+.publication-image{
+    width: 700px;
+    height: 700px;
+}
+
+/*Borrar publication logo.*/
+.image-delete-publication{
+    position: absolute;
+    left: 96%;
+    top: 3%;
+    width: 4%;
+    text-align: center;
+}
+.image-delete-publication > img{
+    width: 20px;
+}
+/*En el caso de que no haya ningún usuario, mostrar el mensaje con las siguientes caracteriticas.*/
+.show-message{
+    margin-left: 3%;
+}
+/*Posición del mensaje.*/
+.messages-button{
+    float: right;
+    margin-top: 1%;
+    left: 18%;
+    width: 14%;
+    margin-right: 1%;
+}
+/*La anchura de los botones de los mensajes.*/
+.messages-button > div{
+    width: 100%;
+}

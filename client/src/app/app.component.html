@@ -12,13 +12,18 @@
             </a>
           </li>
           <li class="nav-item" >
-            <a class="btn btn-light">
+            <a class="btn btn-light" [routerLink]="['/timeline']" [routerLinkActive]="['active']">
               Timeline
             </a>
           </li>
           <li  class="nav-item">
             <a class="btn btn-light" href="#" [routerLink]="['/users']" [routerLinkActive]="['active']">
-              Users
+              Usuarios
+            </a>
+          </li>
+          <li  class="nav-item">
+            <a class="btn btn-light" href="#" [routerLink]="['/messages']" [routerLinkActive]="['active']">
+              Mensajes
             </a>
           </li>
         </ul>
@@ -39,13 +44,14 @@
         <ul id="menu-usuario" class="dropdown" *ngIf="identity">
           <div class="avatar">
             <img src="{{ url+'get-image-user/'+ identity.image }}" *ngIf="identity && identity.image"/>
+            <img src="../assets/img/profile.png" *ngIf="!identity || !identity.image"/>
           </div>
           <div class="menu-usuario-buton">
             <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               {{identity.name}}
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#">Mi perfil </a>
+              <a class="dropdown-item" [routerLink]="['./profile/'+identity._id]">Mi perfil </a>
               <a class="dropdown-item" [routerLink]="['./mis-datos']" >Mis datos</a>
               <a id="usuario-cerrar-session" class="dropdown-item" (click)="logout()" href="#">Cerrar sessión</a>
             </div>

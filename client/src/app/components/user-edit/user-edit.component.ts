@@ -4,6 +4,7 @@ import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 import { UploadService } from '../../services/upload.service';
 import { GLOBAL } from '../../services/global';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
 
 
 @Component({
@@ -21,6 +22,9 @@ export class UserEditComponent implements OnInit{
     public status:string;
     public filesToUpload: Array<File>;
     public url:String;
+    public imageChangedEvent: any = '';
+    public croppedImage: any = '';
+    
 
     // Search the tags in the DOM
     bodyTag: HTMLBodyElement = document.getElementsByTagName('body')[0];
@@ -41,21 +45,11 @@ export class UserEditComponent implements OnInit{
 
     ngOnInit(): void {
 
-
-       // Getting an instance of the widget.
-        //const widget = uploadcare.Widget('[role=uploadcare-uploader]');
-        // Selecting an image to be replaced with the uploaded one.
-        //const preview = document.getElementById('preview');
-        // "onUploadComplete" lets you get file info once it has been uploaded.
-        // "cdnUrl" holds a URL of the uploaded file: to replace a preview with.
-        
-        /*widget.onUploadComplete(fileInfo => {
-        preview.src = fileInfo.cdnUrl;
-        });*/
-
         console.log('user-edit.component se ha cargado!.');
         this.bodyTag.classList.add('home-page');
         this.htmlTag.classList.add('home-page');
+        //document.getElementById('cropped-image').style.display = "none";
+
     }
 
     onSubmit(){
@@ -87,10 +81,40 @@ export class UserEditComponent implements OnInit{
         );
     }
 
-    fileChangeEvent(fileInput:any){
+    //Metodo que convierte la imagen base64 a archivo para luego mandarselo al backend.
+    fileSaved(){
+        
+        //document.getElementById('preview').style.display = "none";
+        const base64 = this.croppedImage;
 
-        this.filesToUpload = <Array<File>>fileInput.target.files;
+        function dataURLtoFile(dataurl, filename) {
+ 
+            var arr = dataurl.split(','),
+                mime = arr[0].match(/:(.*?);/)[1],
+                bstr = atob(arr[1]), 
+                n = bstr.length, 
+                u8arr = new Uint8Array(n);
+                
+            while(n--){
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            
+            return new File([u8arr], filename, {type:mime});
+        }
+        
+        let file = dataURLtoFile(base64,'hello.png');
+        let files: Array<File> = [file];
+        this.filesToUpload = files;
+
+        //document.getElementById('cropped-image').style.display = "block";
     }
+
+    /*fileChangeEvent(fileInput:any){
+
+    this.filesToUpload = <Array<File>>fileInput.target.files;
+    
+    }*/
+
 
     ngOnDestroy() {
 
@@ -98,6 +122,17 @@ export class UserEditComponent implements OnInit{
         this.bodyTag.classList.remove('home-page');
         this.htmlTag.classList.remove('home-page');
 
-  }
+    }
+
+    fileChangeEvent(event: any): void {
+        this.imageChangedEvent = event;
+    }
+
+    imageCropped(event: ImageCroppedEvent) {
+        //document.getElementById('preview').style.display = "none";
+        this.croppedImage = event.base64;
+        console.log(this.croppedImage);
+    }
+
 
 }

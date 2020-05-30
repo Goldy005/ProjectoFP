@@ -1,0 +1,79 @@
+<h1 class="profile-title">{{title}}</h1>
+<div class="profile">
+    <div *ngIf="user != null" class="users card">
+        <div class="card-body">
+            <div class="users-image">
+                <img class="rounded-circle z-depth-2 img-fluid" *ngIf="user && user.image" src="{{ url+'get-image-user/'+ user.image }}"/>
+                <img class="rounded-circle z-depth-2 img-fluid" *ngIf=" !user || !user.image" src="../../../assets/img/profile.png"/>
+            </div>
+            <div class="users-body">
+                <h5 class="card-title">Nombre y Apellidos: {{ user.name+' '+user.surname }}</h5>
+                <p class="card-text">Apodo: {{user.nick}}</p>
+                <p class="card-text">Email: {{user.email}}</p>
+                <div class="users-stats">
+                    <table>
+                        <tr>
+                            <th><a [routerLink]="['/following/'+user._id+'/1']">Siguiendo</a></th>
+                            <th><a [routerLink]="['/followed/'+user._id+'/1']">Seguidores</a></th>
+                            <th>Publicaciones</th>
+                        </tr>
+                        <tr *ngIf="statsUser">
+                            <td><a [routerLink]="['/following/'+user._id+'/1']">{{ statsUser.following }}</a></td>
+                            <td><a [routerLink]="['/followed/'+user._id+'/1']">{{ statsUser.followed }}</a></td>
+                            <td>{{ statsUser.publication }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <br/>
+                <div class="badge badge-pill badge-secondary" *ngIf="followed && identity._id != user._id"><span>Te sigue</span></div>
+            </div>
+            <div class="users-boton">
+                <button class="btn btn-success" (click)="followUser(user._id)" *ngIf="!following && identity._id != user._id">Seguir</button>
+                <button class="btn btn-primary" (click)="unfollowUser(user._id)" *ngIf="following && identity._id != user._id"
+                    (mouseenter)="mouseEnter(user._id)"
+                    (mouseleave)="mouseLeave()"
+                    [class.btn-danger]="followUserOver"
+                >
+                    <span *ngIf="user._id == followUserOver;else following">
+                        Dejar de seguir
+                    </span>
+                    <ng-template #following>
+                        Siguiendo
+                    </ng-template>
+                                
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<br/>
+<br/>
+<br/>
+<h2 class="profile-publication-title" *ngIf="publications && publications.length > 0">Publicaciones</h2>
+<div class="people">
+    <div *ngFor="let publication of publications" class="item-publication">
+        <div class="users card">
+            <div class="card-body">
+                <div class="users-image">
+                    <img class="rounded-circle z-depth-2" *ngIf="publication.user.image" src="{{ url+'get-image-user/'+ publication.user.image }}"/>
+                    <img class="rounded-circle z-depth-2" *ngIf="!publication.user.image" src="../../../assets/img/profile.png"/>
+                </div>
+                <div class="users-body">
+                    <h5 class="card-title">{{ publication.user.name+' '+publication.user.surname }}</h5>
+                    <p class="card-text">{{publication.text}}</p>
+                    <div class="date">
+                        {{ (publication.created_at | amFromUnix ) | amLocale: 'es' | amTimeAgo }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="timeline-show-more">
+        <button class="btn btn-success view-more" (click)="viewMore()" *ngIf="!noMore">
+            Ver más publicaciones
+        </button>
+    </div>
+    <br/>
+    <br/>
+</div>
+<sidebar  (sended)="refresh($event)" [stats]="stats"></sidebar>
