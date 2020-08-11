@@ -1,5 +1,6 @@
 import { Component, OnInit,OnDestroy,Renderer2 } from '@angular/core';
-
+import { UserService } from '../../services/user.service'; //Cargo el user service.
+import { Router,ActivatedRoute, Params } from '@angular/router'; // Para redirigir las rutas.
 @Component({
     selector: 'home',
     templateUrl: './home.component.html'
@@ -11,9 +12,16 @@ export class HomeComponent implements OnInit,OnDestroy{
      // Search the tags in the DOM
     bodyTag: HTMLBodyElement = document.getElementsByTagName('body')[0];
     htmlTag: HTMLElement = document.getElementsByTagName('html')[0];
+    public identity:any;
 
-    constructor(){
+
+    constructor(
+        private _route:ActivatedRoute,
+        private _router:Router,
+        private _userService:UserService
+    ){
         this.title = 'Bienvenido a KIONUR';
+        this.identity = this._userService.getIdentity();
     }
 
     ngOnInit(){

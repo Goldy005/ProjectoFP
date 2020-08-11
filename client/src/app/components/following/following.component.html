@@ -41,7 +41,7 @@
 </div>
 
 <!--En caso que no siga a ningún usuario, muestro el siguiente mensaje.-->
-<div class="show-message" *ngIf="followed != null && followed.length == 0">
-    <p>{{user.name}} no tiene ningún seguidor.</p>
+<div class="show-message" *ngIf="following != null && following.length == 0">
+    <p>{{user.name}} no sigue a nadie.</p>
 </div>
 <sidebar  (sended)="refresh($event)" [stats]="stats"></sidebar>

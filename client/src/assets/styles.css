@@ -48,20 +48,25 @@ body{
     font-family: 'Ubuntu';
     font-size: 2em;
     margin-left: 40%;
-    margin-top: 7%;
+    margin-top: 6%;
 }
 
 /*Cuerpo en la página home.*/
 
 .home-body{
-    
     margin-left: 38%;
     margin-top: 13%;
+}
+/*Posicionar correctamente los butones.*/
+.home-buttons{
+    margin-left: 15%;  
+    margin-top: 5%;
+
 }
 
 /*Anchura de los botones*/
 /*Separación de los botones.*/
-.home-body  > a{
+.home-buttons  > a{
     margin-right: 3%;
     width: 20%;
 }
@@ -69,13 +74,14 @@ body{
 /*Alinear los botones a la derecha.*/
 #menu-usuario{
     position: absolute;
-    left: 88%;
+    right: 1%;
     display: flex;
+    margin-top: 1%;
 }
 /*Alinear el desplegable*/
 #menu-usuario .dropdown-menu{
     position: absolute;
-    left: 22%;
+    right:1%;
 }
 /*Separar el avatar del menu desplegable.*/
 .menu-usuario-buton{
@@ -198,11 +204,17 @@ body{
     margin-left: 10%;
     width: 100%;
 }
-.users-stats td{
+.users-stats td {
     text-align: center;
     color: green;
     font-weight: bold;
     border: 1px solid rgb(202, 202, 202);
+}
+.users-stats td > a{
+    color: green;
+}
+.users-stats th > a{
+    color:black;
 }
 
 /*Alinear la parte de publicaciones*/

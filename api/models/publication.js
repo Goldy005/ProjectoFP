@@ -5,7 +5,7 @@ const { Schema } = mongoose; // definir un nuevo schema.
 
 // Definimos el modelo del publicaion.
 const PublicationSchema = Schema({
-  text: String,
+  text: { type: String,maxlength:90},
   file: String,
   created_at: String,
   user: { type: Schema.ObjectId, ref: 'User' }

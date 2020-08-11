@@ -11,7 +11,7 @@
                     <p class="card-text">{{user.nick}}</p>
                 </div>
                 <div class="users-boton">
-                    <button *ngIf="follows.indexOf(user._id) < 0" (click)="followUser(user._id)" class="btn btn-success">Seguir</button>
+                    <button *ngIf="follows.indexOf(user._id) < 0" (click)="followUser(user._id)" class="btn btn-success">&nbsp;&nbsp;Seguir&nbsp;&nbsp;</button>
                     <button *ngIf="follows.indexOf(user._id) >= 0" 
                         (mouseenter)="mouseEnter(user._id)"
                         (mouseleave)="mouseLeave(user._id)"
@@ -37,5 +37,11 @@
         <li class="page-item" *ngIf="page > 1"><a class="page-link" [routerLink]="['/users',prev_page]">Anterior</a></li>
         <li class="page-item" *ngIf="pages != page"><a class="page-link" [routerLink]="['/users',next_page]">Siguiente</a></li>
     </ul>
+</div>
+<!--En caso que no siga a ningún usuario, muestro el siguiente mensaje.-->
+<div class="show-message" *ngIf="users != null && users.length == 1 && page == 1">
+    <br/>
+    <br/>
+    <p>No hay más usuarios en la red social.</p>
 </div>
 <sidebar  (sended)="refresh($event)" [stats]="stats"></sidebar>

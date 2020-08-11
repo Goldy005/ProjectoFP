@@ -73,6 +73,7 @@ export class SendedComponent implements OnInit {
             }
 
             //devolver la lista de mensajes enviados.
+            this.page = page;
             this.getMessages(this.page);
         });
     }
@@ -85,6 +86,8 @@ export class SendedComponent implements OnInit {
                     this.messages = response.messages;
                     this.total = response.total;
                     this.pages = response.pages;
+                    console.log('total'+this.pages);
+                    console.log('page'+this.page);
                 }
             },
             error =>{

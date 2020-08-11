@@ -36,6 +36,8 @@ export class ProfileComponent implements OnInit{
     public publications:Publication[];
     public itemsPerPage:any;
     public noMore = false;
+    public showImage:any;
+
 
 
 
@@ -290,6 +292,11 @@ export class ProfileComponent implements OnInit{
         }
         this.getPublicationsUser(this.page,true);
 
+    }
+
+    //Muestra la imagen si hay y a la vez lo oculta.
+    showThisImage(id:any){
+        this.showImage = id;
     }
 
 

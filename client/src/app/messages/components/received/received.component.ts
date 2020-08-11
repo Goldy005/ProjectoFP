@@ -69,7 +69,7 @@ export class ReceivedComponent implements OnInit {
                     this.prev_page = 1;
                 }
             }
-
+            this.page = page
             //devolver la lista de mensajes enviados.
             this.getMessages(this.page);
         });

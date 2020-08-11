@@ -35,7 +35,7 @@ function saveUser(req, res) {
     params.password
   ) {
     user.name = params.name;
-    user.surname = params.name;
+    user.surname = params.surname;
     user.nick = params.nick;
     user.email = params.email;
     user.role = 'ROLE_USER';
@@ -92,7 +92,7 @@ function loginUser(req, res) {
   const { email } = params;
   const { password } = params;
 
-  User.findOne({ email }, (err, user) => {
+  User.findOne({ email }).select("+password").exec((err, user) => {
     if (err) return res.status(500).send({ message: 'Error en la petición.' });
 
     if (user) {

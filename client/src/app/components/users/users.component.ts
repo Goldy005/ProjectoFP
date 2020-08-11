@@ -5,6 +5,7 @@ import { Follow } from '../../models/follow';
 import { UserService } from '../../services/user.service';
 import { FollowService } from '../../services/follow.service';
 import { GLOBAL } from '../../services/global';
+import { NumberSymbol } from '@angular/common';
 
 
 @Component({
@@ -29,6 +30,7 @@ export class UsersComponent  implements OnInit{
     public follows: any; // gente que sige el usuarios.
     public followUserOver: number;
     public stats:any;
+    public totalUsers: number;
 
 
     // Search the tags in the DOM
@@ -46,6 +48,9 @@ export class UsersComponent  implements OnInit{
         this.token = this._userService.getToken();
         this.url = GLOBAL.url;
         this.stats = JSON.parse(this._userService.getStats());
+        this.pages = 1;
+        this.page = 1;
+        this.totalUsers = 1;
     }
 
     ngOnInit(){
@@ -55,6 +60,7 @@ export class UsersComponent  implements OnInit{
         this.htmlTag.classList.add('home-page');
         this.actualPage();
         this.getCounters();
+        console.log('pages'+this.pages);
 
     }
 
@@ -80,6 +86,7 @@ export class UsersComponent  implements OnInit{
             }
 
             //devolver la lista de usuarios.
+            this.page = page;
             this.getUsers(page);
         });
     }
@@ -99,6 +106,7 @@ export class UsersComponent  implements OnInit{
                     this.users = response.users;
                     this.pages = response.pages;
                     this.follows = response.users_following;
+                    this.totalUsers = this.users.length;
 
                     if(page > this.pages){
                         this._router.navigate(['/users/1']);

@@ -45,15 +45,25 @@ export class SidebarComponent  implements OnInit{
     onSubmit(form:any){
         this._publicationService.addPublication(this.token,this.publication).subscribe(
             response =>{
+                this.publication = response.publication;  
                 if(response.publication){
-                    this.publication = response.publication;                    
-                    //subir la imagen.
-                    this._uploadService.makeFileRequest(this.url+'upload-image-pub/'+this.publication._id,[],this.filesToUpload,this.token,'image')
-                                                        .then((result:any)=>{
-                                                            this.publication.file = result.image;
-                                                            this.status = 'success';
-                                                            form.reset();
-                                                        });
+                        //subir la imagen.
+                    if(this.filesToUpload){
+                        this._uploadService.makeFileRequest(this.url+'upload-image-pub/'+this.publication._id,[],this.filesToUpload,this.token,'image')
+                        .then((result:any)=>{
+                            this.publication.file = result.publication.file;
+                            this.status = 'success';
+                            console.log('shajinder'+this.publication.file);
+                            console.log(result);
+                            console.log(result.publication.file);
+                            form.reset();
+                            this.sendPublication(true);
+                        });
+
+                    }else{
+                        this.sendPublication(true);
+                    }
+
                 }else{
                     this.status = 'error';
                 }
@@ -77,5 +87,15 @@ export class SidebarComponent  implements OnInit{
 
     sendPublication(event: any){
         this.sended.emit({send:'true'});
+    }
+
+    //Contador de caracteres
+
+    countChars(obj:any){
+    
+        var inputValue = (<HTMLInputElement>document.getElementById("publication")).value;
+        let longitud = inputValue.length; 
+        document.getElementById("charNum").innerHTML = ' '+longitud;
+        console.log("1");
     }
 }

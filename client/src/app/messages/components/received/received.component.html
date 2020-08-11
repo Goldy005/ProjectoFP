@@ -21,3 +21,9 @@
             <li class="page-item" *ngIf="pages != page"><a class="page-link" [routerLink]="['/messages/received',next_page]">Siguiente</a></li>
         </ul>
 </div>
+<!--En caso que no siga a ningún mensaje, muestro el siguiente mensaje.-->
+<div class="show-message" *ngIf="messages != null && messages.length == 0">
+    <br/>
+    <br/>
+    <p>No tienes ningún mensaje.</p>
+</div>

@@ -70,4 +70,14 @@ export class AddComponent implements OnInit {
         );
     }
 
+    //Contador de caracteres
+
+    countChars(obj:any){
+        
+        var inputValue = (<HTMLInputElement>document.getElementById("message")).value;
+        let longitud = inputValue.length; 
+        document.getElementById("charNum").innerHTML = ' '+longitud;
+        console.log("1");
+    }
+
 }

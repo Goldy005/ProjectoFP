@@ -13,12 +13,12 @@
             <label>Para:</label>
             <!--Lista de seguidores.-->
             <select  *ngIf="follows" name="receiver" #receiver="ngModel" [(ngModel)]="message.receiver" class="form-control" required>
-                <option *ngFor="let follow of follows" value="{{follow.user._id}}">{{ follow.user.name + ' ' +follow.user.surname + ' (' + follow.user.nick + ')'}}</option>
+                <option *ngFor="let follow of follows" value="{{follow.user._id}}">{{ follow.user.name + ' ' +follow.user.surname }}</option>
             </select>
         </p>
         <p>
-            <label>Mensaje:</label>
-            <textarea name="text" #text="ngModel" [(ngModel)]="message.text" class="form-control" required></textarea>
+            <label>Mensaje (max 100 caracteres):<span id="charNum"> 0 </span></label>
+            <textarea id="message" name="text" (keyup)="countChars();" #text="ngModel" [(ngModel)]="message.text" maxlength="100" class="form-control" required></textarea>
             <span *ngIf="!text.valid && text.touched">
                 El mensaje es obligatorio.
             </span>

@@ -12,7 +12,7 @@ import { GLOBAL } from './services/global';
 export class AppComponent implements OnInit,DoCheck {
 
   public title:string;
-  public identity;
+  public identity:any;
   public url:string;
 
   constructor(

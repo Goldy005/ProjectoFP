@@ -5,41 +5,41 @@
         Registro completado correctamente, <a [routerLink] = "['/login']">identificate aquí</a>
     </div>
     <div class="alert alert-danger col-lg-6" *ngIf="status == 'error'">
-        El registro no se ha podido completarse, puede que  tu email o apodo ya esté en usuo, intentalo de nuevo.
+        El registro no se ha podido completarse, puede que  tu email o apodo ya este en uso, intentalo de nuevo.
     </div>
       <!--Centramos el logo.-->
     <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" class="col-lg-5">
         <p>
             <label>Nombre</label>
-            <input type="text" name="name" #name="ngModel" [(ngModel)]="user.name" class="form-control" required />
+            <input type="text" name="name" #name="ngModel" maxlength="15" [(ngModel)]="user.name" class="form-control" required />
             <span *ngIf="!name.valid && name.touched">
                 El nombre es obligatorio.
             </span>
         </p>
         <p>
             <label>Apellidos</label>
-            <input type="text" name="apellidos" #surname="ngModel" [(ngModel)]="user.surname" class="form-control" required />
+            <input type="text" name="surname" #surname="ngModel"  maxlength="26" [(ngModel)]="user.surname" class="form-control" required />
             <span *ngIf="!surname.valid && surname.touched">
                 El apellido es obligatorio.
             </span>
         </p>
         <p>
             <label>Apodo</label>
-            <input type="text" name="nick" #nick="ngModel" [(ngModel)]="user.nick" class="form-control" required />
+            <input type="text" name="nick" #nick="ngModel" maxlength="26" [(ngModel)]="user.nick" class="form-control" required />
             <span *ngIf="!nick.valid && nick.touched">
                 El apodo es obligatorio.
             </span>
         </p>
         <p>
             <label>Correo electrónico</label>
-            <input type="email" name="email" #email="ngModel" [(ngModel)]="user.email" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required />
+            <input type="email" name="email" #email="ngModel" maxlength="90" [(ngModel)]="user.email" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required />
             <span *ngIf="!email.valid && email.touched">
                 El correo no es válido.
             </span>
         </p>
         <p>
             <label>Contraseña</label>
-            <input type="password" name="password" #password="ngModel" [(ngModel)]="user.password" class="form-control" required />
+            <input type="password" name="password" maxlength="26" #password="ngModel" [(ngModel)]="user.password" class="form-control" required />
             <span *ngIf="!password.valid && password.touched">
                 El correo es obligatorio.
             </span>

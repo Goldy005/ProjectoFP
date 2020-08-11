@@ -134,6 +134,12 @@ export class TimelineComponent implements OnInit{
     //Al publicar una publicación refresca el component y las estadisticas del contandor.
     refresh(event=null){
         this.getPublications(1,false,true);
+        this.page = 1;
+        if(this.pages == this.page ){
+            this.noMore =  true;
+        }else{
+            this.noMore = false;
+        }
     }
 
     //metodo para obtener las estadisticas del usuario.

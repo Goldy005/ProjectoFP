@@ -33,10 +33,10 @@
                         </div>
                     </div>                    
                     <button *ngIf="publication.file != 'null' && showImage != publication._id" class="btn btn-default icono-foto" (click)="showThisImage(publication._id)">
-                        <img  src="https://www.flaticon.com/premium-icon/icons/svg/2071/2071589.svg"/>
+                        <img src="https://image.flaticon.com/icons/svg/1040/1040241.svg"/>
                     </button>
                     <button *ngIf="publication.file != 'null' && showImage == publication._id " class="btn btn-default icono-foto" (click)="showThisImage(1)">
-                        <img  src="https://www.flaticon.com/premium-icon/icons/svg/2938/2938565.svg"/>
+                        <img  src="https://image.flaticon.com/icons/svg/1057/1057225.svg"/>
                     </button>
                     <div class="publication-image" *ngIf="publication.file && showImage == publication._id ">
                         <img class="col-lg-12" src="{{ url +'get-image-pub/'+publication.file }}"/>
@@ -55,5 +55,9 @@
     </div>
     <br/>
     <br/>
+</div>
+<!--En caso que no haya ninguna publicación, muestro el siguiente mensaje.-->
+<div class="show-message" *ngIf="publications != null && publications.length == 0">
+    <p>No existen ninguna publicación en la red social.</p>
 </div>
 <sidebar (sended)="refresh($event)" [stats]="stats"></sidebar>

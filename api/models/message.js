@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 
 // Definimos el modelo del Message.
 const MessageSchema = Schema({
-  text: String,
+  text: { type: String,maxlength:100},
   viewed: String,
   created_at: String,
   emitter: { type: Schema.ObjectId, ref: 'User' },

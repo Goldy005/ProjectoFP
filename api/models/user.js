@@ -5,11 +5,11 @@ const { Schema } = mongoose; // definir un nuevo schema.
 
 // Definimos el modelo del usuario.
 const UserSchema = Schema({
-  name: String,
-  surname: String,
-  nick: String,
-  email: String,
-  password: String,
+  name: { type: String,maxlength:15},
+  surname: { type: String,maxlength:26},
+  nick: { type: String,maxlength:26},
+  email: { type: String,maxlength:90},
+  password: { type: String, select: false },
   role: String,
   image: String
 });
