@@ -39,7 +39,7 @@ export class SidebarComponent  implements OnInit{
     }
 
     ngOnInit(){
-        console.log('se ha cargado el sidebar.');
+        //console.log('se ha cargado el sidebar.');
     }
 
     onSubmit(form:any){
@@ -53,9 +53,6 @@ export class SidebarComponent  implements OnInit{
                         .then((result:any)=>{
                             this.publication.file = result.publication.file;
                             this.status = 'success';
-                            console.log('shajinder'+this.publication.file);
-                            console.log(result);
-                            console.log(result.publication.file);
                             form.reset();
                             this.sendPublication(true);
                         });
@@ -96,6 +93,5 @@ export class SidebarComponent  implements OnInit{
         var inputValue = (<HTMLInputElement>document.getElementById("publication")).value;
         let longitud = inputValue.length; 
         document.getElementById("charNum").innerHTML = ' '+longitud;
-        console.log("1");
     }
 }

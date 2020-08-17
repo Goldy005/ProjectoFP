@@ -47,7 +47,7 @@ export class SendedComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log('Sended se ha cargado');
+        //console.log('Sended se ha cargado');
         this.actualPage();
     }
 
@@ -86,8 +86,8 @@ export class SendedComponent implements OnInit {
                     this.messages = response.messages;
                     this.total = response.total;
                     this.pages = response.pages;
-                    console.log('total'+this.pages);
-                    console.log('page'+this.page);
+                    //console.log('total'+this.pages);
+                    //console.log('page'+this.page);
                 }
             },
             error =>{

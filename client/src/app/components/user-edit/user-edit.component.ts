@@ -45,7 +45,7 @@ export class UserEditComponent implements OnInit{
 
     ngOnInit(): void {
 
-        console.log('user-edit.component se ha cargado!.');
+        //console.log('user-edit.component se ha cargado!.');
         this.bodyTag.classList.add('home-page');
         this.htmlTag.classList.add('home-page');
         //document.getElementById('cropped-image').style.display = "none";
@@ -131,7 +131,7 @@ export class UserEditComponent implements OnInit{
     imageCropped(event: ImageCroppedEvent) {
         //document.getElementById('preview').style.display = "none";
         this.croppedImage = event.base64;
-        console.log(this.croppedImage);
+        //console.log(this.croppedImage);
     }
 
 

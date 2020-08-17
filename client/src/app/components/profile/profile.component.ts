@@ -70,7 +70,6 @@ export class ProfileComponent implements OnInit{
 
         this.bodyTag.classList.add('home-page');
         this.htmlTag.classList.add('home-page');
-        console.log('Profile component cargado corectamente.');
         this.loadPage();
     }
 
@@ -273,7 +272,6 @@ export class ProfileComponent implements OnInit{
             },
             error => {
                 let errorMessage = <any>error;
-                console.log(error);
 
                 if(errorMessage != null){
                     this.status = 'error';

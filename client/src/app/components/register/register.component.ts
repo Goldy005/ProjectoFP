@@ -18,7 +18,7 @@ export class RegisterComponent implements OnInit{
     
     //Metodo se ejecuta el incio.
     ngOnInit(){
-        console.log('Component de login cargado.');
+        //console.log('Component de login cargado.');
     }
 
     //Constructor

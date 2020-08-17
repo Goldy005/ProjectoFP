@@ -31,7 +31,6 @@ export class LoginComponent implements OnInit{
 
     //metodos.
     ngOnInit(){
-        console.log('Component de login cargado...');
     }
 
     onSubmit(){
@@ -47,7 +46,6 @@ export class LoginComponent implements OnInit{
                     this.status = 'error';
                 }else{
                     
-                    console.log(this.identity);
 
                     //Guardamos la información del usuario, en el local storage.(solo guarda en fomato String)
                     localStorage.setItem('identity',JSON.stringify(this.identity));

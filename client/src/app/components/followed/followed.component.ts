@@ -54,7 +54,6 @@ export class FollowedComponent  implements OnInit{
 
     ngOnInit(){
         console.log('cargado el component users');
-        console.log('page'+this.page);
         this.bodyTag.classList.add('home-page');
         this.htmlTag.classList.add('home-page');
         this.actualPage();
@@ -100,7 +99,6 @@ export class FollowedComponent  implements OnInit{
                 if(!response.follows){
                     this.status = 'error';
                 }else{
-                    console.log(response.follows);
                     this.total = response.total;
                     this.followed = response.follows;
                     this.pages = response.pages;

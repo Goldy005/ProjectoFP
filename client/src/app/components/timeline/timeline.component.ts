@@ -51,7 +51,7 @@ export class TimelineComponent implements OnInit{
 
     ngOnInit(){
 
-        console.log('Timeline componente cargado correctamente.');
+        //console.log('Timeline componente cargado correctamente.');
         this.bodyTag.classList.add('home-page');
         this.htmlTag.classList.add('home-page');
         this.getPublications(this.page);
@@ -104,7 +104,6 @@ export class TimelineComponent implements OnInit{
                         this.getCounters();
                     }
 
-                    console.log(this.publications);
                 }else{
                     this.status = 'error';
                 }
@@ -167,7 +166,7 @@ export class TimelineComponent implements OnInit{
     //borrar la publicación.
     deletePublication(id:any){
 
-        console.log('borrar publicaion'+id);
+        //console.log('borrar publicaion'+id);
         this._publicationService.deletePublication(this.token,id).subscribe(
             response => {
                 this.refresh();

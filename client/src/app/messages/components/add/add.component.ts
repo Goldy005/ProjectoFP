@@ -37,7 +37,7 @@ export class AddComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log('Add se ha cargado');
+        //console.log('Add se ha cargado');
         this.getMyFollows();
     }
 
@@ -77,7 +77,6 @@ export class AddComponent implements OnInit {
         var inputValue = (<HTMLInputElement>document.getElementById("message")).value;
         let longitud = inputValue.length; 
         document.getElementById("charNum").innerHTML = ' '+longitud;
-        console.log("1");
     }
 
 }

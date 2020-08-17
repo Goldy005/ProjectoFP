@@ -54,13 +54,13 @@ export class UsersComponent  implements OnInit{
     }
 
     ngOnInit(){
-        console.log('cargado el component users');
-        console.log('page'+this.page);
+        //console.log('cargado el component users');
+        //console.log('page'+this.page);
         this.bodyTag.classList.add('home-page');
         this.htmlTag.classList.add('home-page');
         this.actualPage();
         this.getCounters();
-        console.log('pages'+this.pages);
+        //console.log('pages'+this.pages);
 
     }
 

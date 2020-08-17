@@ -3,12 +3,15 @@
 también se realiza la conexión a un servidor nodejs*/
 
 /*Para conectarnos a la base de datos vamos usar mongoose y cargamos la libreria mongoose. */
-var mongoose = require('mongoose');
-var app = require('./app');//cargamos todos los paquetes y librerias.
-var port = 3800;
+const mongoose = require('mongoose');
+const app = require('./app');//cargamos todos los paquetes y librerias.
+//const port = 3800;
+
+const port = process.env.PORT || 8080;
+
 /*Para conectarse a mongoDB se tiene que utilizar las promesas. */
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/red_social',{
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/red_social',{
     useNewUrlParser: true,
     useUnifiedTopology : true,
     useFindAndModify : false
