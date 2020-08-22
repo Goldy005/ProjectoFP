@@ -1,4 +1,4 @@
-<div class="people">
+<div class="people"  *ngIf="users != null && users.length > 0">
     <div *ngFor="let user of users" class="item-user">
         <div class="users card" *ngIf="user._id != identity._id">
             <div class="card-body">
@@ -39,7 +39,7 @@
     </ul>
 </div>
 <!--En caso que no siga a ningún usuario, muestro el siguiente mensaje.-->
-<div class="show-message" *ngIf="users != null && users.length == 1 && page == 1">
+<div class="show-message" *ngIf="users == null || users.length == 0">
     <br/>
     <br/>
     <p>No hay más usuarios en la red social.</p>
