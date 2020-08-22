@@ -189,10 +189,10 @@ function getUsers(req, res) {
     page = req.params.page;
   }
 
-  const itemsPerPage = 5;
-
+  const itemsPerPage = 4;
+  
   // hago una busqueda de todos los usuarios que existen en la base de datos.
-  User.find()
+  User.find({ _id: {$ne: identityUser} })
     .sort('_id')
     .paginate(page, itemsPerPage, (err, users, total) => {
       if (err)
