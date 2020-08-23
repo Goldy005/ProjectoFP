@@ -58,6 +58,7 @@ export class SidebarComponent  implements OnInit{
                         });
 
                     }else{
+                        this.status = 'success';
                         this.sendPublication(true);
                     }
 
